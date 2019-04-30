@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "365980850679",
+    "firebase_url": "https://biomasse-image-hoster.firebaseio.com",
+    "project_id": "biomasse-image-hoster",
+    "storage_bucket": "biomasse-image-hoster.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365980850679:android:6f884559a7a8d1af",
+        "android_client_info": {
+          "package_name": "be.henallux.biomasse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365980850679-0n4hmib4qshcl3r3vco3913nap3a6jvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx3tkqHbxhPUTNyksQ7xBMDhv3lV4dDPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365980850679-0n4hmib4qshcl3r3vco3913nap3a6jvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
