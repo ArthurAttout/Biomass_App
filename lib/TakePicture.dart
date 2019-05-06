@@ -88,7 +88,7 @@ class _CameraAppState extends State<TakePicture> {
         print("Done taking picture");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ResultScreen(pathPicture: path)),
+          MaterialPageRoute(builder: (context) => ResultScreen(pathPicture: path, crop: true)),
         );
       }
     } catch (e) {

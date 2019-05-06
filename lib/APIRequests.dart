@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
-import 'package:image/image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' show join;
-import 'package:path_provider/path_provider.dart';
 
 String uri_api = "http://192.168.1.85:5000";
 int overlayWidth = 150;
@@ -14,30 +12,16 @@ double screenWidth = 0;
 double screenHeight = 0;
 
 
-Future<String> sendImageToAPI(String path) async {
+Future<String> sendImageToAPI(String path, bool shouldCrop) async {
 
-  int x = ((screenWidth/2)+(overlayWidth/2)).toInt();
-  int y = ((screenHeight/2)+(overlayHeight/2)).toInt();
-  int w = overlayWidth;
-  int h = overlayHeight;
+  print("Sending original image");
+  StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage_original.png');
+  StorageUploadTask taskOriginal = firebaseStorageRef.putFile(new File(path));
+  String url = await (await taskOriginal.onComplete).ref.getDownloadURL();
 
-  var image = decodeImage(new File(path).readAsBytesSync());
-  var imageCropped = copyCrop(image, x, y, w, h);
-
-  final pathTemp = join(
-    (await getTemporaryDirectory()).path, '${DateTime.now()}-crop.png',
-  );
-
-  new File(pathTemp).writeAsBytesSync(imageCropped.getBytes());
-
-  final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage.jpg');
-  final StorageUploadTask task = firebaseStorageRef.putFile(new File(path));
-  String url = await (await task.onComplete).ref.getDownloadURL();
-  print(url);
-  return "OK";
-
-  /*Map map = {
+  Map map = {
     'url': url,
+    'crop': shouldCrop
   };
 
   HttpClient httpClient = new HttpClient();
@@ -48,5 +32,9 @@ Future<String> sendImageToAPI(String path) async {
 
   String reply = await response.transform(utf8.decoder).join();
   httpClient.close();
-  return reply;*/
+  return reply;
+}
+
+Future<String> sendLocationToAPI(String path,Map<String, double> location) async {
+
 }

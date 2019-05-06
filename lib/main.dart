@@ -1,7 +1,10 @@
-import 'package:biomasse/TakePicture.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:biomasse/TakePicture.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:biomasse/APIRequests.dart';
+import 'package:biomasse/ResultScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  File _image;
 
   void _incrementCounter() {
     setState(() {
@@ -53,13 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
             RaisedButton(
               onPressed: () {
                 Navigator.push(
@@ -68,13 +65,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               textColor: Colors.white,
+              color: Colors.green,
+              child: const Text('Camera'),
+              padding: const EdgeInsets.all(0.0),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ResultScreen(pathPicture: image.path, crop : false)),
+                );
+              },
+              textColor: Colors.white,
               padding: const EdgeInsets.all(0.0),
               child: Container(
                 decoration: const BoxDecoration(
-                  color: Colors.green
+                    color: Colors.green
                 ),
                 padding: const EdgeInsets.all(10.0),
-                child: Text('Goto picture'),
+                child: Text('Upload picture'),
               ),
             )
           ],
