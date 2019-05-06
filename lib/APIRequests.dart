@@ -11,13 +11,13 @@ int overlayHeight = 150;
 double screenWidth = 0;
 double screenHeight = 0;
 
-
-Future<String> sendImageToAPI(String path, bool shouldCrop) async {
+Future<String> sendImageToAPI(String path, bool shouldCrop, Function uploadCallback) async {
 
   print("Sending original image");
   StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage_original.png');
   StorageUploadTask taskOriginal = firebaseStorageRef.putFile(new File(path));
   String url = await (await taskOriginal.onComplete).ref.getDownloadURL();
+  uploadCallback();
 
   Map map = {
     'url': url,

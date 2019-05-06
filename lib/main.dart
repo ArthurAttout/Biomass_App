@@ -17,7 +17,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Biomasse prise photo'),
+      home: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("images/background_1.png"), fit: BoxFit.cover)),
+        child: MyHomePage(title: 'Biomasse prise photo')
+      ),
     );
   }
 }
@@ -43,17 +48,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    MediaQueryData data = MediaQuery.of(context);
-    screenWidth = data.size.width * data.devicePixelRatio;
-    screenHeight = data.size.height * data.devicePixelRatio;
-    print(screenWidth);
-    print(screenHeight);
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Container(
+        margin: EdgeInsets.only(top: 105,bottom: 105,left: 50,right: 50),
+        color: Color.fromARGB(200, 255, 255, 255),
+        alignment: Alignment(0.0, 0.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
