@@ -26,6 +26,7 @@ dependencies:
   camera: 0.5.0
   path_provider: 0.5.0+1
   firebase_storage:
+  tuple: ^1.0.2
   location: ^1.4.1
   image_picker: ^0.4.12
   intl: ^0.15.8

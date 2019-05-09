@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:biomasse/APIRequests.dart';
 import 'package:biomasse/ResultScreen.dart';
 import 'package:biomasse/ValorizationScreen.dart';
+import 'package:biomasse/ValorizationUtils.dart';
 
 void main() => runApp(MyApp());
 
@@ -96,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: ()  {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ValorizationScreen()),
+                  MaterialPageRoute(builder: (context) => ValorizationScreen(biomassName: "Biomasse", valorisations: getDummyValorizations(),)),
                 );
               },
               textColor: Colors.white,
