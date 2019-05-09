@@ -22,25 +22,8 @@ String getValorisationFromCharacteristics(List<Tuple4<int,int,int,String>> matri
         }
       }
   }
-
   return savedOutcome;
 }
-
-int countRangeEqual(List<Tuple4<int,int,int,String>> matrix, int toBeEqual){
-
-  var i = 0;
-  for(var entry in matrix){
-    if(entry.item1 == toBeEqual){
-      i++;
-    }
-
-    if(entry.item1 > toBeEqual)
-      return i;
-  }
-
-  return i;
-}
-
 
 List<Tuple4<int,int,int,String>> getDummyValorizations(){
   var list = new List<Tuple4<int,int,int,String>>();
@@ -48,23 +31,30 @@ List<Tuple4<int,int,int,String>> getDummyValorizations(){
   list.add(new Tuple4(2, 1, -1, "Fermentation"));
   list.add(new Tuple4(2, 48, 1, "Fermentation"));
   list.add(new Tuple4(2, 48, 57, "Combustion"));
+  list.add(new Tuple4(2, 57, -1, "Combustion"));
+  list.add(new Tuple4(2, -1, -1, "Combustion"));
 
   list.add(new Tuple4(10, 1, -1, "Pyrolyse"));
   list.add(new Tuple4(10, 30, -1, "Combustion"));
   list.add(new Tuple4(10, 90, -1, "Digestion anaérobique"));
+  list.add(new Tuple4(10, -1, -1, "Digestion anaérobique"));
 
   list.add(new Tuple4(17, 44, -1, "Combustion"));
   list.add(new Tuple4(17, 89, -1, "Digestion anaérobique"));
+  list.add(new Tuple4(17, -1, -1, "Digestion anaérobique"));
 
   list.add(new Tuple4(20, 1, -1, "Combustion"));
   list.add(new Tuple4(20, 50, -1, "Fermentation"));
   list.add(new Tuple4(20, 70, -1, "Digestion anaérobique"));
   list.add(new Tuple4(20, 75, -1, "Combustion"));
+  list.add(new Tuple4(20, -1, -1, "Combustion"));
 
   list.add(new Tuple4(90, 1, 1, "Digestion anaérobique"));
   list.add(new Tuple4(90, 9, 80, "Digestion anaérobique"));
   list.add(new Tuple4(90, 30, 1, "Fermentation"));
   list.add(new Tuple4(90, 30, 50, "Pyrolyse"));
+  list.add(new Tuple4(90, -1, -1, "Combustion"));
+
 
   list.add(new Tuple4(95, -1, -1, "Pyrolyse"));
 

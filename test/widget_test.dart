@@ -22,4 +22,13 @@ void main() {
       expect(getValorisationFromCharacteristics(matrixValorisation, 16, 34, 91), "Combustion");
   });
 
+  test("Valorization threshold", () {
+    var matrixValorisation = getDummyValorizations();
+    expect(getValorisationFromCharacteristics(matrixValorisation, 38, 54, 7), "Combustion");
+  });
+
+  test("Valorization threshold 2", () {
+    var matrixValorisation = getDummyValorizations();
+    expect(getValorisationFromCharacteristics(matrixValorisation, 2, 57, 59), "Combustion");
+  });
 }
