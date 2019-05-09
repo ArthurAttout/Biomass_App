@@ -17,7 +17,7 @@ Future<String> sendImageToAPI(String path, bool shouldCrop, Function uploadCallb
   StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage_original.png');
   StorageUploadTask taskOriginal = firebaseStorageRef.putFile(new File(path));
   String url = await (await taskOriginal.onComplete).ref.getDownloadURL();
-  uploadCallback();
+  uploadCallback(url);
 
   Map map = {
     'url': url,
@@ -35,6 +35,24 @@ Future<String> sendImageToAPI(String path, bool shouldCrop, Function uploadCallb
   return reply;
 }
 
-Future<String> sendLocationToAPI(String path,Map<String, double> location) async {
+Future<String> sendLocationToAPI(String oldUrl,Map<String, double> location) async {
 
+  print("Sending image + geoloc");
+
+  Map map = {
+    'url': oldUrl,
+    'latitude': location['lat'],
+    'longitude': location['lng'],
+    'crop': false
+  };
+
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(uri_api + "/geolocation"));
+  request.headers.set('content-type', 'application/json');
+  request.add(utf8.encode(json.encode(map)));
+  HttpClientResponse response = await request.close();
+
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return reply;
 }

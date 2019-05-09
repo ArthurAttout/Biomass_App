@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:biomasse/APIRequests.dart';
 import 'package:biomasse/ResultScreen.dart';
+import 'package:biomasse/ValorizationScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -89,6 +90,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 padding: const EdgeInsets.all(10.0),
                 child: Text('Upload picture'),
+              ),
+            ),
+            RaisedButton(
+              onPressed: ()  {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ValorizationScreen()),
+                );
+              },
+              textColor: Colors.white,
+              padding: const EdgeInsets.all(0.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.green
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: Text('Valorization'),
               ),
             )
           ],

@@ -25,10 +25,13 @@ class ResultScreenState extends State<ResultScreen> {
   int status = STATUS_DEFAULT;
   String biomass_name = "";
   double certitude = 0;
+  String urlOldUpload;
+  var valorizations;
 
-  void uploadCallback(){
+  void uploadCallback(String url){
     setState(() {
       status = STATUS_PENDING_CLASSIFICATION;
+      urlOldUpload = url;
     });
   }
 
@@ -43,11 +46,15 @@ class ResultScreenState extends State<ResultScreen> {
           biomass_name = json_response['biomass_name'];
           certitude = json_response['certitude'];
           status = STATUS_RECOGNIZED;
+          valorizations = json_response['valorizations'];
         });
+
+        print(valorizations);
       }
       else if(json_response['result'] == "BAD_CERTITUDE"){
-        var location = new Location();
-        location.getLocation().then(onLocationFound);
+        setState(() {
+          status = STATUS_NEED_GEOLOC;
+        });
       }
     });
 
@@ -57,10 +64,11 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
   void onLocationFound(Map<String, double> location){
-    sendLocationToAPI(widget.pathPicture,location).then((res){
-
+    print("Location found");
+    sendLocationToAPI(urlOldUpload,location).then((res){
       final json_response = json.decode(res);
       if(json_response['result'] == "OK"){
+        print("Server said OK location found");
         setState(() {
           biomass_name = json_response['biomass_name'];
           certitude = json_response['certitude'];
@@ -68,12 +76,17 @@ class ResultScreenState extends State<ResultScreen> {
         });
       }
       else if(json_response['result'] == "BAD_CERTITUDE"){
+        print("Server said no way");
         setState(() {
           biomass_name = json_response['biomass_name'];
           certitude = json_response['certitude'];
           status = STATUS_UNRECOGNIZED;
         });
       }
+    });
+
+    setState(() {
+      status = STATUS_PENDING_UPLOAD_IMAGE;
     });
   }
 
@@ -100,7 +113,7 @@ class ResultScreenState extends State<ResultScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     CircularProgressIndicator(),
-                    Text("L'image est en cours d'identification ... ")
+                    Text("L'image est envoyée au serveur ... ")
                   ],
                 )
               )
@@ -136,7 +149,7 @@ class ResultScreenState extends State<ResultScreen> {
         ),
       );
     }
-    else if(status == STATUS_RECOGNIZED){ // OK
+    else if(status == STATUS_RECOGNIZED){
       return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -185,8 +198,102 @@ class ResultScreenState extends State<ResultScreen> {
         ),
       );
     }
-    else if(status == STATUS_UNRECOGNIZED){ // No way
+    else if(status == STATUS_NEED_GEOLOC){
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Reconnaissance ..."),
+        ),
+        body: Stack(
+          children: <Widget>[
+            Container(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(image: new AssetImage("images/background_1.png"), fit: BoxFit.cover,),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 80,bottom: 80,left: 30,right: 30),
+              color: Color.fromARGB(200, 255, 255, 255),
+              alignment: Alignment(0.0, 0.0),
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "L'image n'a pas pu être reconnue.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize:18,color: Colors.black),
+                  ),
+                  Text(
+                    "Si vous le souhaitez, vous pouvez préciser votre géolocalisation afin d'aider l'intelligence artificielle",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize:12,color: Colors.black),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(38.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        // Location doesn't work with other dependencies .. Temporary faked data
 
+                        var location = new Map<String,double>();
+                        location.putIfAbsent("lat", () => 50);
+                        location.putIfAbsent("lng", () => -70);
+                        onLocationFound(location);
+                      },
+                      textColor: Colors.white,
+                      color: Colors.green,
+                      child: const Text('Géolocalisation'),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    else if(status == STATUS_UNRECOGNIZED){
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Reconnaissance ..."),
+        ),
+        body: Stack(
+          children: <Widget>[
+            Container(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(image: new AssetImage("images/background_1.png"), fit: BoxFit.cover,),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 80,bottom: 80,left: 30,right: 30),
+              color: Color.fromARGB(200, 255, 255, 255),
+              alignment: Alignment(0.0, 0.0),
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "L'image n'a toujours pas pu être reconnue.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize:18,color: Colors.black),
+                  ),
+                  Text(
+                    "Il semblerait que cette biomasse ne soit pas reconnue par le système. Si vous le souhaitez, vous pouvez soumettre un dossier aux chercheurs",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize:12,color: Colors.black),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(38.0),
+                    child: RaisedButton(
+                      onPressed: () {},
+                      textColor: Colors.white,
+                      color: Colors.green,
+                      child: const Text('Soumettre'),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
     }
   }
 
