@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:biomasse/APIRequests.dart';
 import 'package:biomasse/ResultScreen.dart';
+import 'package:biomasse/SubmitReportScreen.dart';
 import 'package:biomasse/ValorizationScreen.dart';
 import 'package:biomasse/ValorizationUtils.dart';
 
@@ -94,10 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             RaisedButton(
-              onPressed: ()  {
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ValorizationScreen(biomassName: "Biomasse", valorisations: getDummyValorizations(),)),
+                  MaterialPageRoute(builder: (context) => SubmitReportScreen()),
                 );
               },
               textColor: Colors.white,
@@ -107,16 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.green
                 ),
                 padding: const EdgeInsets.all(10.0),
-                child: Text('Valorization'),
+                child: Text('Upload report'),
               ),
             )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }

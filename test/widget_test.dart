@@ -12,23 +12,20 @@ import 'package:biomasse/main.dart';
 
 void main() {
 
-  test("Valorization", () {
-      var matrixValorisation = getDummyValorizations();
-      expect(getValorisationFromCharacteristics(matrixValorisation, 17, 89, 8), "Digestion anaérobique");
-      expect(getValorisationFromCharacteristics(matrixValorisation, 48, 17, 99), "Pyrolyse");
-      expect(getValorisationFromCharacteristics(matrixValorisation, 95, 8, 4), "Pyrolyse");
-
-      expect(getValorisationFromCharacteristics(matrixValorisation, 11, 74, 92), "Digestion anaérobique");
-      expect(getValorisationFromCharacteristics(matrixValorisation, 16, 34, 91), "Combustion");
-  });
-
-  test("Valorization threshold", () {
+  test("Ta mère", () {
     var matrixValorisation = getDummyValorizations();
-    expect(getValorisationFromCharacteristics(matrixValorisation, 38, 54, 7), "Combustion");
+    expect(getValorisationFromCharacteristics(matrixValorisation, 43, 3, 2), "Digestion anaérobique");
   });
-
-  test("Valorization threshold 2", () {
-    var matrixValorisation = getDummyValorizations();
-    expect(getValorisationFromCharacteristics(matrixValorisation, 2, 57, 59), "Combustion");
-  });
+//  test("Valorization threshold", () {
+//    var matrixValorisation = getDummyValorizations();
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 38, 54, 7), "Custom");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 39, 54, 7), "Custom");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 38, 99, 1), "Custom");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 38, 0, 0), "Custom");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 43, 3, 2), "Digestion anaérobique");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 48, 17, 99), "Pyrolyse");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 11, 74, 92), "Digestion anaérobique");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 37, 52, 77), "Combustion 2");
+//    expect(getValorisationFromCharacteristics(matrixValorisation, 80, 90, 94), "Pyrolyse");
+//  });
 }

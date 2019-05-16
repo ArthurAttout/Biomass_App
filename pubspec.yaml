@@ -25,11 +25,11 @@ dependencies:
   cupertino_icons: ^0.1.2
   camera: 0.5.0
   path_provider: 0.5.0+1
+  multi_image_picker: ^4.3.1
   firebase_storage:
   tuple: ^1.0.2
   random_string: ^0.0.2
-  location: ^1.4.1
-  image_picker: ^0.4.12
+  image_picker: ^0.6.0+3
   intl: ^0.15.8
 
 

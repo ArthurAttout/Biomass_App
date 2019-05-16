@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:intl/intl.dart';
 
-import 'package:location/location.dart';
 import 'package:biomasse/ValorizationScreen.dart';
 import 'package:biomasse/ValorizationUtils.dart';
 import 'package:biomasse/APIRequests.dart';
