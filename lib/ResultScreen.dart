@@ -6,7 +6,8 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 
 import 'package:location/location.dart';
-
+import 'package:biomasse/ValorizationScreen.dart';
+import 'package:biomasse/ValorizationUtils.dart';
 import 'package:biomasse/APIRequests.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -186,7 +187,12 @@ class ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ValorizationScreen(valorisations: getDummyValorizations(), biomassName: biomass_name)),
+                      );
+                    },
                     textColor: Colors.white,
                     color: Colors.green,
                     child: const Text('Valorisations'),

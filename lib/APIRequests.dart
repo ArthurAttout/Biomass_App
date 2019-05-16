@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' show join;
+import 'package:random_string/random_string.dart' as random;
 
 String uri_api = "http://192.168.1.85:5000";
 int overlayWidth = 150;
@@ -14,7 +15,7 @@ double screenHeight = 0;
 Future<String> sendImageToAPI(String path, bool shouldCrop, Function uploadCallback) async {
 
   print("Sending original image");
-  StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage_original.png');
+  StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(random.randomAlphaNumeric(10) + ".png");
   StorageUploadTask taskOriginal = firebaseStorageRef.putFile(new File(path));
   String url = await (await taskOriginal.onComplete).ref.getDownloadURL();
   uploadCallback(url);
