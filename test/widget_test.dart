@@ -14,7 +14,12 @@ void main() {
 
   test("Ta mère", () {
     var matrixValorisation = getDummyValorizations();
-    expect(getValorisationFromCharacteristics(matrixValorisation, 43, 3, 2), "Digestion anaérobique");
+    expect(getValorisationFromCharacteristics(matrixValorisation, 20, 70, 4), "Digestion anaérobique");
+    expect(getValorisationFromCharacteristics(matrixValorisation, 20, 70, 9), "Digestion anaérobique");
+    expect(getValorisationFromCharacteristics(matrixValorisation, 20, 70, 20), "Digestion anaérobique");
+    expect(getValorisationFromCharacteristics(matrixValorisation, 20, 70, 10), "Digestion anaérobique");
+    expect(getValorisationFromCharacteristics(matrixValorisation, 20, 70, 20), "Digestion anaérobique");
+    expect(getValorisationFromCharacteristics(matrixValorisation, 20, 70, 200), "Digestion anaérobique");
   });
 //  test("Valorization threshold", () {
 //    var matrixValorisation = getDummyValorizations();

@@ -1,11 +1,17 @@
 import 'package:tuple/tuple.dart';
 
-String getValorisationFromCharacteristics(List<Tuple4<int,int,int,String>> matrix, double char1, double char2, double char3){
+String getValorisationFromCharacteristics(List<Tuple4<int,int,int,String>> matrix, int char1, int char2, int char3){
 
   var savedThreshold1 = -1;
   var savedThreshold2 = -1;
   var savedThreshold3 = -1;
   var savedOutcome = "Inconnu";
+
+  print("Getting for");
+  print(char1);
+  print(char2);
+  print(char3);
+  print("****");
 
   // Je regarde dans la matrice
   // Colonne par colonne, je prends le premier enregistrement qui est
@@ -19,10 +25,12 @@ String getValorisationFromCharacteristics(List<Tuple4<int,int,int,String>> matri
       if(entry.item1 == -1) return entry.item4;
       if(entry.item1 >= char1 && (savedThreshold1 == -1 || savedThreshold1 == entry.item1)){
         savedThreshold1 = entry.item1;
+        savedOutcome = entry.item4;
 
         if(entry.item2 == -1) return entry.item4;
         if(entry.item2 >= char2 && (savedThreshold2 == -1 || savedThreshold2 == entry.item2)){
           savedThreshold2 = entry.item2;
+          savedOutcome = entry.item4;
 
           if(entry.item3 == -1) return entry.item4;
           savedOutcome = entry.item4;

@@ -16,9 +16,9 @@ class ValorizationScreen extends StatefulWidget {
 class ValorizationScreenState extends State<ValorizationScreen> {
   ValorizationScreenState(this.biomassName, this.valorizations);
 
-  double celluloseValue = 10.0;
-  double hemiCelluloseValue = 10.0;
-  double ligninValue = 10.0;
+  int celluloseValue = 10;
+  int hemiCelluloseValue = 10;
+  int ligninValue = 10;
   List<Tuple4<int,int,int,String>> valorizations;
   String currentValorization = "Pyrolyse";
   String biomassName;
@@ -78,9 +78,9 @@ class ValorizationScreenState extends State<ValorizationScreen> {
                                 });
                               },
                               onChanged: (newRating) {
-                                setState(() => celluloseValue = newRating);
+                                setState(() => celluloseValue = newRating.toInt());
                               },
-                              value: celluloseValue,
+                              value: celluloseValue.toDouble(),
                             ),
                           ),
                           Expanded(
@@ -123,9 +123,9 @@ class ValorizationScreenState extends State<ValorizationScreen> {
                                 });
                               },
                               onChanged: (newRating) {
-                                setState(() => hemiCelluloseValue = newRating);
+                                setState(() => hemiCelluloseValue = newRating .toInt());
                               },
-                              value: hemiCelluloseValue,
+                              value: hemiCelluloseValue.toDouble(),
                             ),
                           ),
                           Expanded(
@@ -166,11 +166,11 @@ class ValorizationScreenState extends State<ValorizationScreen> {
                                   });
                                 },
                               onChanged: (newRating) {
-                                setState(() => ligninValue = newRating);
+                                setState(() => ligninValue = newRating .toInt());
                               },
                               min: 0,
                               max: 100,
-                              value: ligninValue,
+                              value: ligninValue.toDouble(),
                             ),
                           ),
                           Expanded(
