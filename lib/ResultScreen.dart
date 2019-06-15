@@ -25,7 +25,9 @@ class ResultScreenState extends State<ResultScreen> {
   int status = STATUS_DEFAULT;
   String biomass_name = "";
   double certitude = 0;
+  String debug_id_model = "";
   String urlOldUpload;
+  TextEditingController _controller = new TextEditingController();
   var valorizations;
 
   void uploadCallback(String url){
@@ -35,9 +37,14 @@ class ResultScreenState extends State<ResultScreen> {
     });
   }
 
+  void onChange() {
+    debug_id_model = _controller.text;
+  }
+
   @override
   void initState() {
     super.initState();
+    _controller.addListener(onChange);
     sendImageToAPI(widget.pathPicture, widget.crop,uploadCallback).then((res){
       print(res);
       final json_response = json.decode(res);
@@ -63,9 +70,9 @@ class ResultScreenState extends State<ResultScreen> {
     });
   }
 
-  void onLocationFound(Map<String, double> location){
+  void onLocationFound(Map<String, double> location, [String debugModelID]){
     print("Location found");
-    sendLocationToAPI(urlOldUpload,location).then((res){
+    sendLocationToAPI(urlOldUpload,location,debugModelID).then((res){
       final json_response = json.decode(res);
       if(json_response['result'] == "OK"){
         print("Server said OK location found");
@@ -234,20 +241,24 @@ class ResultScreenState extends State<ResultScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.all(38.0),
-                    child: RaisedButton(
+                    child: TextFormField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                          labelText: 'Debug_model_id'
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(38.0),
+                    child : RaisedButton(
                       onPressed: () {
-                        // Location doesn't work with other dependencies .. Temporary faked data
-
-                        var location = new Map<String,double>();
-                        location.putIfAbsent("lat", () => 50);
-                        location.putIfAbsent("lng", () => -70);
-                        onLocationFound(location);
+                        onLocationFound(null,debug_id_model);
                       },
                       textColor: Colors.white,
                       color: Colors.green,
                       child: const Text('Géolocalisation'),
                     ),
-                  ),
+                  )
                 ],
               ),
             )

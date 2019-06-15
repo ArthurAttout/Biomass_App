@@ -77,16 +77,30 @@ Future<String> sendReportToAPI(List<Asset> assets, String comment) async {
   return reply;
 }
 
-Future<String> sendLocationToAPI(String oldUrl,Map<String, double> location) async {
+Future<String> sendLocationToAPI(String oldUrl,Map<String, double> location,[String debugModelID]) async {
 
   print("Sending image + geoloc");
+  Map map = null;
 
-  Map map = {
-    'url': oldUrl,
-    'latitude': location['lat'],
-    'longitude': location['lng'],
-    'crop': false
-  };
+  if(debugModelID == null){
+    map = {
+      'url': oldUrl,
+      'latitude': location['lat'],
+      'longitude': location['lng'],
+      'crop': false,
+      'debug_model_target':debugModelID
+    };
+  }
+  else
+  {
+    map = {
+      'url': oldUrl,
+      'latitude': 50,
+      'longitude': -70,
+      'crop': false,
+      'debug_model_target':debugModelID
+    };
+  }
 
   HttpClient httpClient = new HttpClient();
   HttpClientRequest request = await httpClient.postUrl(Uri.parse(uri_api + "/geolocation"));
@@ -96,5 +110,7 @@ Future<String> sendLocationToAPI(String oldUrl,Map<String, double> location) asy
 
   String reply = await response.transform(utf8.decoder).join();
   httpClient.close();
+
+  print("Server said " + reply);
   return reply;
 }
